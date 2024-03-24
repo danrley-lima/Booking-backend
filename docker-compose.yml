@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  spring-boot-app:
+    build: .
+    container_name: booking-app
+    ports:
+      - 8080:8080
+    volumes:
+      - ./src:/workspace/app/src
+    depends_on:
+      - db
+    networks:
+      - booking-network
+
+  db:
+    image: postgres:16.2-alpine
+    container_name: booking-db
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=booking
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U admin" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    # restart: always
+    networks:
+      - booking-network
+
+networks:
+  booking-network:
+    driver: bridge
