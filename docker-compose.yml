@@ -10,6 +10,7 @@ services:
     # command: ./mvnw spring-boot:run
     volumes:
       - ./:/workspace/app
+      - ./.docker/springboot:/workspace/app/src/main/resources
     depends_on:
       - db
     networks:
