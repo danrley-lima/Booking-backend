@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  db-local:
+    image: postgres:16.2-alpine
+    container_name: booking-db-local
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=booking
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U admin -d booking" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    # restart: always
