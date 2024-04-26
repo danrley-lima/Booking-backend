@@ -1,11 +1,14 @@
 spring:
+  profiles:
+    active:
+    # - dev
   devtools:
     livereload:
       enabled: true
   application:
     name: booking
   datasource:
-    url: jdbc:postgresql://db:5432/booking
+    url: jdbc:postgresql://localhost:5432/booking
     username: admin
     password: admin
   jpa:
