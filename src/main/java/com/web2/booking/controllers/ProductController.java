@@ -28,21 +28,13 @@ public class ProductController {
 
   @GetMapping("/{id}")
   ResponseEntity<ProductOutputDTO> getProductById(@PathVariable UUID id) {
-
     ProductOutputDTO response = productService.getProduct(id);
     return ResponseEntity.ok(response);
   }
 
-  @PostMapping("")
+  @PostMapping("/")
   ResponseEntity<CreateProductOutputDTO> createProduct(@RequestBody CreateProductInputDTO product) {
     CreateProductOutputDTO response = productService.saveProduct(product);
-    return ResponseEntity.ok(response);
-  }
-
-  @DeleteMapping("/{id}")
-  ResponseEntity<DeleteProductOutputDTO> deleteProductById(@PathVariable UUID id) {
-
-    DeleteProductOutputDTO response = productService.deleteProduct(id);
     return ResponseEntity.ok(response);
   }
 
@@ -50,6 +42,13 @@ public class ProductController {
   ResponseEntity<ProductOutputDTO> updateProduct(@PathVariable UUID id,
       @RequestBody UpdateProductInputDTO product) {
     ProductOutputDTO response = productService.updateProduct(id, product);
+    return ResponseEntity.ok(response);
+  }
+
+  @DeleteMapping("/{id}")
+  ResponseEntity<DeleteProductOutputDTO> deleteProductById(@PathVariable UUID id) {
+
+    DeleteProductOutputDTO response = productService.deleteProduct(id);
     return ResponseEntity.ok(response);
   }
 
