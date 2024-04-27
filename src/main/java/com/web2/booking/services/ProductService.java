@@ -19,15 +19,26 @@ import com.web2.booking.DTO.Product.UpdateProductInputDTO;
 import com.web2.booking.models.ProductModel;
 import com.web2.booking.repositories.ProductRepository;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Validator;
+
 @Service
 public class ProductService {
-  @Autowired
-  ProductRepository productRepository;
 
-  public CreateProductOutputDTO saveProduct(CreateProductInputDTO input) {
+  @Autowired
+  private ProductRepository productRepository;
+
+  @Autowired
+  private Validator validator;
+
+  public CreateProductOutputDTO saveProduct(CreateProductInputDTO product) {
     ProductModel newProduct = new ProductModel();
-    BeanUtils.copyProperties(input, newProduct);
+    BeanUtils.copyProperties(product, newProduct);
     newProduct.setCreatedAt(LocalDateTime.now());
+
+    validateProduct(newProduct);
+
     ProductModel savedProduct = productRepository.save(newProduct);
 
     CreateProductOutputDTO output = new CreateProductOutputDTO(
@@ -50,7 +61,7 @@ public class ProductService {
     ProductModel product = productRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Product not found"));
 
-    return mapProductToProductOutput(product);
+    return mapProductToProductOutputDTO(product);
   }
 
   public DeleteProductOutputDTO deleteProduct(UUID id) {
@@ -60,16 +71,17 @@ public class ProductService {
     return new DeleteProductOutputDTO(true);
   }
 
-  public ProductOutputDTO updateProduct(UUID id, UpdateProductInputDTO input) {
-    ProductModel productModel = productRepository.findById(id)
+  public ProductOutputDTO updateProduct(UUID id, UpdateProductInputDTO product) {
+    ProductModel productToUpdate = productRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Product not found"));
 
-    BeanUtils.copyProperties(input, productModel, getNullPropertyNames(input));
-    ProductModel updatedProduct = productRepository.save(productModel);
-    return mapProductToProductOutput(updatedProduct);
+    BeanUtils.copyProperties(product, productToUpdate, getNullPropertyNames(product));
+    validateProduct(productToUpdate);
+    ProductModel updatedProduct = productRepository.save(productToUpdate);
+    return mapProductToProductOutputDTO(updatedProduct);
   }
 
-  private ProductOutputDTO mapProductToProductOutput(ProductModel product) {
+  private ProductOutputDTO mapProductToProductOutputDTO(ProductModel product) {
     return new ProductOutputDTO(
         product.getId(),
         product.getTitle(),
@@ -96,5 +108,12 @@ public class ProductService {
     }
     String[] result = new String[emptyNames.size()];
     return emptyNames.toArray(result);
+  }
+
+  private void validateProduct(ProductModel product) {
+    Set<ConstraintViolation<ProductModel>> violations = validator.validate(product);
+    if (!violations.isEmpty()) {
+      throw new ConstraintViolationException(violations);
+    }
   }
 }
