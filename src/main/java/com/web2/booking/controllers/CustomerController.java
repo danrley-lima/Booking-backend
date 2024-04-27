@@ -1,0 +1,54 @@
+package com.web2.booking.controllers;
+
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.web2.booking.DTO.Customer.CreateCustomerInputDTO;
+import com.web2.booking.DTO.Customer.CreateCustomerOutputDTO;
+import com.web2.booking.DTO.Customer.CustomerOutputDTO;
+import com.web2.booking.DTO.Customer.DeleteCustomerOutputDTO;
+import com.web2.booking.DTO.Customer.UpdateCustomerInputDTO;
+import com.web2.booking.services.CustomerService;
+
+@RestController
+@RequestMapping("api/customers")
+public class CustomerController {
+  @Autowired
+  CustomerService customerService;
+
+  @GetMapping("/{id}")
+  public ResponseEntity<CustomerOutputDTO> getCustomerById(@PathVariable UUID id) {
+    CustomerOutputDTO response = customerService.getCustomer(id);
+    return ResponseEntity.ok(response);
+  }
+
+  @PostMapping("/")
+  public ResponseEntity<CreateCustomerOutputDTO> createCustomer(@RequestBody CreateCustomerInputDTO customer) {
+    CreateCustomerOutputDTO response = customerService.saveCustomer(customer);
+    return ResponseEntity.ok(response);
+  }
+
+  @PutMapping("/{id}")
+  public ResponseEntity<CustomerOutputDTO> updateCustomer(@PathVariable UUID id,
+      @RequestBody UpdateCustomerInputDTO customer) {
+    CustomerOutputDTO response = customerService.updateCustomer(id, customer);
+    return ResponseEntity.ok(response);
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<DeleteCustomerOutputDTO> deleteCustomerById(@PathVariable UUID id) {
+    DeleteCustomerOutputDTO response = customerService.deleteCustomer(id);
+    return ResponseEntity.ok(response);
+  }
+
+}
