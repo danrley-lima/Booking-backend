@@ -3,6 +3,7 @@ package com.web2.booking.controllers;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +36,7 @@ public class CustomerController {
   @PostMapping("/")
   public ResponseEntity<CreateCustomerOutputDTO> createCustomer(@RequestBody CreateCustomerInputDTO customer) {
     CreateCustomerOutputDTO response = customerService.saveCustomer(customer);
-    return ResponseEntity.ok(response);
+    return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
 
   @PutMapping("/{id}")
