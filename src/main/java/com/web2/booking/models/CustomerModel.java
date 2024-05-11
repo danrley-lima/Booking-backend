@@ -2,6 +2,7 @@ package com.web2.booking.models;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -9,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -56,7 +58,17 @@ public class CustomerModel {
   @Pattern(regexp = "^(masculino|feminino|outros)$", message = "Gênero inválido")
   private String gender;
 
+  
   @Column(name = "created_at")
   private LocalDateTime createdAt;
+  
+  @OneToMany(mappedBy = "customer")
+  private List<ProductModel> favorites;
+
+  @OneToMany(mappedBy = "customer")
+  private List<ProductModel> history; 
+
+  // @OneToMany(mappedBy = "customer")
+  // private List<ProductModel> schedule; // Lista de agendamentos futuros 
 
 }
