@@ -1,6 +1,6 @@
 spring:
-  profiles:
-    active:
+  # profiles:
+  #   active:
     # - dev
   devtools:
     livereload:
@@ -16,8 +16,9 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         jdbc:
           lob:
-            "[non_contextual_creation]": true
+            non_contextual_creation: "true"
     open-in-view: false
     show-sql: true
