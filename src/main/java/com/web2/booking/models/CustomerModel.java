@@ -62,10 +62,10 @@ public class CustomerModel {
   @Column(name = "created_at")
   private LocalDateTime createdAt;
   
-  @OneToMany(mappedBy = "customer")
+  @OneToMany(mappedBy = "customer",  cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
   private List<ProductModel> favorites;
 
-  @OneToMany(mappedBy = "customer")
+  @OneToMany(mappedBy = "customer",  cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
   private List<ProductModel> history; 
 
   // @OneToMany(mappedBy = "customer")
