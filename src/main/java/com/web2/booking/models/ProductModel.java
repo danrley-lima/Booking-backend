@@ -67,6 +67,6 @@ public class ProductModel {
   @NotNull
   private String coupon;
 
-  @OneToMany
+  @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
   private List<RatingModel> ratings;
 }

@@ -51,17 +51,18 @@ public class CustomerModel {
 
   @Pattern(regexp = "^(masculino|feminino|outros)$", message = "Gênero inválido")
   private String gender;
+
   
   @Column(name = "created_at")
   private LocalDateTime createdAt;
   
-  @ManyToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+  @ManyToMany
   private List<ProductModel> favorites;
 
-  @ManyToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-  private List<ProductModel> history; 
+  @ManyToMany
+  private List<ProductModel> history;
 
-  // @ManyToMany(mappedBy = "customer")
-  // private List<ProductModel> schedule; // Lista de agendamentos futuros 
+  // @OneToMany(mappedBy = "customer")
+  // private List<ProductModel> schedule; // Lista de agendamentos futuros
 
 }

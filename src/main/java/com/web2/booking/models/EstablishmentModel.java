@@ -18,7 +18,7 @@ public class EstablishmentModel {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private AddressModel addressModel;
 
     @NotBlank
@@ -29,6 +29,6 @@ public class EstablishmentModel {
     @CNPJ
     private String cnpj;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<ProductModel> products;
 }

@@ -28,7 +28,7 @@ public class ReservationModel {
 
     private boolean status = true;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private RatingModel ratingModel;
 
     @JsonFormat(pattern = "MM/dd/yyyy")
