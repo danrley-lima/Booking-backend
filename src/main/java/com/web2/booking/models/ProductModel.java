@@ -1,17 +1,13 @@
 package com.web2.booking.models;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.annotation.Nullable;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -31,13 +27,16 @@ public class ProductModel {
   private String title;
 
   @NotBlank
+  private String description;
+
+  @NotBlank
   private String city;
 
   @NotBlank
   private String state;
 
-  @NotBlank
-  private String image;
+  @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+  private List<PhotoModel> photos;
 
   @NotNull
   @Positive
@@ -59,8 +58,15 @@ public class ProductModel {
   @Column(name = "created_at")
   private LocalDateTime createdAt;
 
-  @ManyToOne
-  @JoinColumn(name = "customer_id")
-  private CustomerModel customer;
+  @JsonFormat(pattern = "MM/dd/yyyy")
+  private LocalDate startDate;
 
+  @JsonFormat(pattern = "MM/dd/yyyy")
+  private LocalDate endDate;
+
+  @NotNull
+  private String coupon;
+
+  @OneToMany
+  private List<RatingModel> ratings;
 }

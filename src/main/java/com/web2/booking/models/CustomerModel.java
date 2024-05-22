@@ -4,15 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -58,18 +51,17 @@ public class CustomerModel {
 
   @Pattern(regexp = "^(masculino|feminino|outros)$", message = "Gênero inválido")
   private String gender;
-
   
   @Column(name = "created_at")
   private LocalDateTime createdAt;
   
-  @OneToMany(mappedBy = "customer",  cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+  @ManyToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
   private List<ProductModel> favorites;
 
-  @OneToMany(mappedBy = "customer",  cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+  @ManyToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
   private List<ProductModel> history; 
 
-  // @OneToMany(mappedBy = "customer")
+  // @ManyToMany(mappedBy = "customer")
   // private List<ProductModel> schedule; // Lista de agendamentos futuros 
 
 }
