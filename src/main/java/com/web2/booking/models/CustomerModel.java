@@ -40,11 +40,11 @@ public class CustomerModel {
   @Column(unique = true)
   private String email;
 
-  @Pattern(regexp = "^\\(\\d{2}\\)\\s\\d{4,5}-\\d{4}$", message = "Invalid phone number format")
+  @Pattern(regexp = "^\\(\\d{2}\\)\\s\\d{4,5}-\\d{4}$", message = "Número de telefone inválido")
   private String phoneNumber;
 
   @NotBlank
-  @Size(min = 6, max = 20)
+  // @Size(min = 6, max = 20)
   private String password;
 
   @Size(min = 11, max = 11)
@@ -52,6 +52,7 @@ public class CustomerModel {
   @Column(unique = true)
   private String cpf;
 
+  @Column(name = "date_of_birth")
   private LocalDate dateOfBirth;
 
   private String nationality;
@@ -59,17 +60,16 @@ public class CustomerModel {
   @Pattern(regexp = "^(masculino|feminino|outros)$", message = "Gênero inválido")
   private String gender;
 
-  
   @Column(name = "created_at")
   private LocalDateTime createdAt;
-  
-  @OneToMany(mappedBy = "customer",  cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+
+  @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
   private List<ProductModel> favorites;
 
-  @OneToMany(mappedBy = "customer",  cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-  private List<ProductModel> history; 
+  @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+  private List<ProductModel> history;
 
   // @OneToMany(mappedBy = "customer")
-  // private List<ProductModel> schedule; // Lista de agendamentos futuros 
+  // private List<ProductModel> schedule; // Lista de agendamentos futuros
 
 }

@@ -26,7 +26,7 @@ public class ProductRepositoryTest {
     product.setPrice(100.0);
     product.setCity("Test City");
     product.setDiscount(20);
-    product.setImage("blablabla");
+    product.setMainImage("blablabla");
     product.setNumberOfReviews(12);
     product.setState("RN");
     product.setTotalPrice(3200);

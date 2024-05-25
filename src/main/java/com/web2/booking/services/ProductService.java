@@ -41,39 +41,31 @@ public class ProductService {
 
     ProductModel savedProduct = productRepository.save(newProduct);
 
-    CreateProductOutputDTO output = new CreateProductOutputDTO(
-        savedProduct.getId(),
-        savedProduct.getTitle(),
-        savedProduct.getCity(),
-        savedProduct.getState(),
-        savedProduct.getImage(),
-        savedProduct.getPrice(),
-        savedProduct.getCustomerScore(),
-        savedProduct.getNumberOfReviews(),
-        savedProduct.getDiscount(),
-        savedProduct.getTotalPrice(),
+    CreateProductOutputDTO output = new CreateProductOutputDTO(savedProduct.getId(),
+        savedProduct.getTitle(), savedProduct.getCity(), savedProduct.getState(),
+        savedProduct.getMainImage(), savedProduct.getPrice(), savedProduct.getCustomerScore(),
+        savedProduct.getNumberOfReviews(), savedProduct.getDiscount(), savedProduct.getTotalPrice(),
         savedProduct.getCreatedAt());
 
     return output;
   }
 
   public ProductOutputDTO getProduct(UUID id) {
-    ProductModel product = productRepository.findById(id)
-        .orElseThrow(() -> new RuntimeException("Product not found"));
+    ProductModel product =
+        productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
 
     return mapProductToProductOutputDTO(product);
   }
 
   public DeleteProductOutputDTO deleteProduct(UUID id) {
-    productRepository.findById(id)
-        .orElseThrow(() -> new RuntimeException("Product not found"));
+    productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
     productRepository.deleteById(id);
     return new DeleteProductOutputDTO(true);
   }
 
   public ProductOutputDTO updateProduct(UUID id, UpdateProductInputDTO product) {
-    ProductModel productToUpdate = productRepository.findById(id)
-        .orElseThrow(() -> new RuntimeException("Product not found"));
+    ProductModel productToUpdate =
+        productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
 
     BeanUtils.copyProperties(product, productToUpdate, getNullPropertyNames(product));
     validateProduct(productToUpdate);
@@ -82,18 +74,10 @@ public class ProductService {
   }
 
   private ProductOutputDTO mapProductToProductOutputDTO(ProductModel product) {
-    return new ProductOutputDTO(
-        product.getId(),
-        product.getTitle(),
-        product.getCity(),
-        product.getState(),
-        product.getImage(),
-        product.getPrice(),
-        product.getCustomerScore(),
-        product.getNumberOfReviews(),
-        product.getDiscount(),
-        product.getTotalPrice(),
-        product.getCreatedAt());
+    return new ProductOutputDTO(product.getId(), product.getTitle(), product.getDescription(),
+        product.getMainImage(), product.getCity(), product.getState(), product.getPrice(),
+        product.getCustomerScore(), product.getNumberOfReviews(), product.getDiscount(),
+        product.getTotalPrice(), product.getCreatedAt());
   }
 
   private String[] getNullPropertyNames(Object source) {
