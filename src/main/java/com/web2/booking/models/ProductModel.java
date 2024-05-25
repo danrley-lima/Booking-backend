@@ -39,6 +39,9 @@ public class ProductModel {
   private String description;
 
   @NotBlank
+  private String mainImage;
+
+  @NotBlank
   private String city;
 
   @NotBlank
@@ -46,9 +49,6 @@ public class ProductModel {
 
   // @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
   // private List<PhotoModel> photos;
-
-  @NotBlank
-  private String mainImage;
 
   @NotNull
   @Positive

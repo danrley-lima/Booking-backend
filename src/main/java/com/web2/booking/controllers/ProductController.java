@@ -38,12 +38,12 @@ public class ProductController {
     return ResponseEntity.ok(response);
   }
 
-  @PutMapping("/{id}")
-  ResponseEntity<ProductOutputDTO> updateProduct(@PathVariable UUID id,
-      @RequestBody UpdateProductInputDTO product) {
-    ProductOutputDTO response = productService.updateProduct(id, product);
-    return ResponseEntity.ok(response);
-  }
+  // @PutMapping("/{id}")
+  // ResponseEntity<ProductOutputDTO> updateProduct(@PathVariable UUID id,
+  //     @RequestBody UpdateProductInputDTO product) {
+  //   ProductOutputDTO response = productService.updateProduct(id, product);
+  //   return ResponseEntity.ok(response);
+  // }
 
   @DeleteMapping("/{id}")
   ResponseEntity<DeleteProductOutputDTO> deleteProductById(@PathVariable UUID id) {
