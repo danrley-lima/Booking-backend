@@ -47,8 +47,8 @@ public class ProductModel {
   @NotBlank
   private String state;
 
-  // @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-  // private List<PhotoModel> photos;
+  @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+  private List<PhotoModel> photos;
 
   @NotNull
   @Positive
@@ -84,6 +84,6 @@ public class ProductModel {
   @JoinColumn(name = "customer_id")
   private CustomerModel customer;
 
-  // @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-  // private List<RatingModel> ratings;
+  @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+  private List<RatingModel> ratings;
 }
