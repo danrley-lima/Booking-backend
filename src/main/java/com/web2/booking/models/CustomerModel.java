@@ -20,6 +20,9 @@ public class CustomerModel {
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
+  @OneToOne
+  private UserProfileModel userProfileModel;
+
   @NotBlank
   @Size(max = 50)
   private String firstName;

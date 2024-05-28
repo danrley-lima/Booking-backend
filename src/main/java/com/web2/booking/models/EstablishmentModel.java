@@ -18,6 +18,9 @@ public class EstablishmentModel {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @OneToOne
+    private UserProfileModel userProfileModel;
+
     @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private AddressModel addressModel;
 
