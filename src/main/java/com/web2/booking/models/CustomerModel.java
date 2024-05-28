@@ -21,7 +21,7 @@ public class CustomerModel {
   private UUID id;
 
   @OneToOne
-  private UserProfileModel userProfileModel;
+  private UsersModel userModel;
 
   @NotBlank
   @Size(max = 50)

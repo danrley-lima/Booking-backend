@@ -19,7 +19,7 @@ public class EstablishmentModel {
     private UUID id;
 
     @OneToOne
-    private UserProfileModel userProfileModel;
+    private UsersModel userModel;
 
     @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private AddressModel addressModel;

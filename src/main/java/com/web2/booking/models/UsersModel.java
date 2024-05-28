@@ -9,9 +9,9 @@ import lombok.Data;
 import java.util.UUID;
 
 @Entity
-@Table(name = "user_profile")
+@Table(name = "users")
 @Data
-public class UserProfileModel {
+public class UsersModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
