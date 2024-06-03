@@ -4,7 +4,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.annotation.Nullable;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -47,6 +50,7 @@ public class ProductModel {
   @NotBlank
   private String state;
 
+  @JsonIgnore
   @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
   private List<PhotoModel> photos;
 
@@ -84,6 +88,10 @@ public class ProductModel {
   @JoinColumn(name = "customer_id")
   private CustomerModel customer;
 
+  @JsonIgnore
   @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
   private List<RatingModel> ratings;
+
+  @Nullable
+  private String category;
 }
