@@ -4,7 +4,7 @@ public enum Role {
 
     ADMIN("ADMINISTRATOR"),
     ESTABLISHMENT("ESTABLISHMENT"),
-    CUSTOMER("COSTUMER");
+    CUSTOMER("CUSTOMER");
 
     private String description;
 
