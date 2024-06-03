@@ -3,20 +3,23 @@ package com.web2.booking.services;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.web2.booking.DTO.Product.CreateProductInputDTO;
 import com.web2.booking.DTO.Product.CreateProductOutputDTO;
 import com.web2.booking.DTO.Product.DeleteProductOutputDTO;
 import com.web2.booking.DTO.Product.ProductOutputDTO;
-import com.web2.booking.DTO.Product.UpdateProductInputDTO;
 import com.web2.booking.models.ProductModel;
 import com.web2.booking.repositories.ProductRepository;
+
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
@@ -29,6 +32,10 @@ public class ProductService {
 
   @Autowired
   private Validator validator;
+
+  public List<ProductModel> searchProducts(String title, String city, LocalDate startDate, String category) {
+    return productRepository.searchProducts(title, city, startDate, category);
+  }
 
   public CreateProductOutputDTO saveProduct(CreateProductInputDTO product) {
     ProductModel newProduct = new ProductModel();
@@ -49,9 +56,12 @@ public class ProductService {
     return output;
   }
 
+  public List<ProductModel> getAllProducts() {
+    return productRepository.findAll();
+  }
+
   public ProductOutputDTO getProduct(UUID id) {
-    ProductModel product =
-        productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+    ProductModel product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
 
     return mapProductToProductOutputDTO(product);
   }
@@ -63,14 +73,17 @@ public class ProductService {
   }
 
   // Refatorar
-  // public ProductOutputDTO updateProduct(UUID id, UpdateProductInputDTO product) {
-  //   ProductModel productToUpdate =
-  //       productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+  // public ProductOutputDTO updateProduct(UUID id, UpdateProductInputDTO product)
+  // {
+  // ProductModel productToUpdate =
+  // productRepository.findById(id).orElseThrow(() -> new
+  // RuntimeException("Product not found"));
 
-  //   BeanUtils.copyProperties(product, productToUpdate, getNullPropertyNames(product));
-  //   validateProduct(productToUpdate);
-  //   ProductModel updatedProduct = productRepository.save(productToUpdate);
-  //   return mapProductToProductOutputDTO(updatedProduct);
+  // BeanUtils.copyProperties(product, productToUpdate,
+  // getNullPropertyNames(product));
+  // validateProduct(productToUpdate);
+  // ProductModel updatedProduct = productRepository.save(productToUpdate);
+  // return mapProductToProductOutputDTO(updatedProduct);
   // }
 
   private ProductOutputDTO mapProductToProductOutputDTO(ProductModel product) {
