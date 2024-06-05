@@ -6,6 +6,10 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.hibernate.validator.constraints.br.CNPJ;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import io.micrometer.common.lang.Nullable;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -21,6 +25,7 @@ public class EstablishmentModel {
     @OneToOne
     private UserProfileModel userProfileModel;
 
+    @Nullable
     @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private AddressModel addressModel;
 
@@ -29,9 +34,10 @@ public class EstablishmentModel {
 
     @NotBlank
     @Size(min = 14, max = 14)
-    @CNPJ
     private String cnpj;
 
-    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @JsonIgnore
+    @Nullable
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<ProductModel> products;
 }
