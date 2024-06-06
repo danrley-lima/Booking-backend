@@ -1,7 +1,11 @@
 package com.web2.booking.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
+import com.web2.booking.models.ProductModel;
+import com.web2.booking.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,6 +33,11 @@ public class ProductController {
   @GetMapping("/{id}")
   ResponseEntity<ProductOutputDTO> getProductById(@PathVariable UUID id) {
     ProductOutputDTO response = productService.getProduct(id);
+    return ResponseEntity.ok(response);
+  }
+  @GetMapping
+  ResponseEntity<List<ProductOutputDTO>> getAllProducts() {
+    List<ProductOutputDTO> response = productService.findAll();
     return ResponseEntity.ok(response);
   }
 

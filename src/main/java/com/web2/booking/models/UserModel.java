@@ -20,10 +20,12 @@ public class UserModel implements UserDetails {
 
     public UserModel() {}
 
-    public UserModel(String email, String encryptedPassword, Role role) {
+    public UserModel(String email, String encryptedPassword, Role role, String name, String phoneNumber) {
         this.email = email;
         this.password = encryptedPassword;
         this.role = role;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
     }
 
     @Id
@@ -48,7 +50,13 @@ public class UserModel implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("CUSTOMER"));
+        if(this.role == Role.ADMIN) {
+            return List.of(new SimpleGrantedAuthority("ADMINISTRATOR"));
+        } else if(this.role == Role.CUSTOMER) {
+            return List.of(new SimpleGrantedAuthority("CUSTOMER"));
+        } else {
+            return List.of(new SimpleGrantedAuthority("ESTABLISHMENT"));
+        }
     }
 
     @Override

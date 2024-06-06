@@ -30,6 +30,7 @@ public class AuthorizationService implements UserDetailsService {
     @Autowired
     private TokenService tokenService;
 
+    @Autowired
     private AuthenticationManager authenticationManager;
 
     @Override
@@ -48,7 +49,7 @@ public class AuthorizationService implements UserDetailsService {
     public ResponseEntity<Object> register(@RequestBody @Valid RegisterDTO registerDTO) {
         if(userRepository.findByEmail(registerDTO.email()) != null) return ResponseEntity.badRequest().build();
         String encryptedPassword = new BCryptPasswordEncoder().encode(registerDTO.password());
-        UserModel newUser = new UserModel(registerDTO.email(), encryptedPassword, registerDTO.role());
+        UserModel newUser = new UserModel(registerDTO.email(), encryptedPassword, registerDTO.role(), registerDTO.name(), registerDTO.phoneNumber());
         userRepository.save(newUser);
         return ResponseEntity.ok().build();
     }

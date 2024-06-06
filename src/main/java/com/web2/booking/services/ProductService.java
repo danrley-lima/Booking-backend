@@ -2,9 +2,8 @@ package com.web2.booking.services;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
@@ -54,6 +53,15 @@ public class ProductService {
         productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
 
     return mapProductToProductOutputDTO(product);
+  }
+
+  public List<ProductOutputDTO> findAll() {
+    List<ProductModel> list = productRepository.findAll();
+    List<ProductOutputDTO> products = new ArrayList<>();
+    for (ProductModel product : list) {
+      products.add(mapProductToProductOutputDTO(product));
+    }
+    return products;
   }
 
   public DeleteProductOutputDTO deleteProduct(UUID id) {

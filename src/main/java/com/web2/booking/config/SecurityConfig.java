@@ -22,6 +22,9 @@ public class SecurityConfig {
     @Autowired
     SecurityFilter securityFilter;
 
+    static final String PATTERN_API_CUSTOMERS = "/api/customers";
+    static final String PATTERN_API_PRODUCTS = "/api/products";
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
@@ -29,7 +32,15 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/register").authenticated()
+                        .requestMatchers(HttpMethod.POST, PATTERN_API_CUSTOMERS).hasRole("CUSTOMER")
+                        .requestMatchers(HttpMethod.GET, PATTERN_API_CUSTOMERS + "/{id}").hasRole("CUSTOMER")
+                        .requestMatchers(HttpMethod.PUT, PATTERN_API_CUSTOMERS + "/{id}").hasRole("CUSTOMER")
+                        .requestMatchers(HttpMethod.DELETE, PATTERN_API_CUSTOMERS + "/{id}").hasRole("CUSTOMER")
+                        .requestMatchers(HttpMethod.POST, PATTERN_API_PRODUCTS).hasRole("ESTABLISHMENT")
+                        .requestMatchers(HttpMethod.GET, PATTERN_API_PRODUCTS + "/{id}").hasRole("ESTABLISHMENT")
+                        .requestMatchers(HttpMethod.PUT, PATTERN_API_PRODUCTS + "/{id}").hasRole("ESTABLISHMENT")
+                        .requestMatchers(HttpMethod.DELETE, PATTERN_API_PRODUCTS + "/{id}").hasRole("ESTABLISHMENT")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
