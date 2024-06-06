@@ -1,12 +1,11 @@
 package com.web2.booking.controllers;
 
-import com.web2.booking.DTO.Login;
-import com.web2.booking.models.UsersModel;
-import com.web2.booking.services.TokenService;
+import com.web2.booking.DTO.Login.AuthenticationDTO;
+import com.web2.booking.DTO.Login.RegisterDTO;
+import com.web2.booking.services.AuthorizationService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,21 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthenticationController {
 
-    private AuthenticationManager authenticationManager;
-
     @Autowired
-    private TokenService tokenService;
+    private AuthorizationService authorizationService;
 
     @PostMapping("/login")
-    public String login(@RequestBody Login login) {
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                new UsernamePasswordAuthenticationToken(login.login(), login.password());
-
-        Authentication authentication = this.authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-
-        var usuario = (UsersModel) authentication.getPrincipal();
-
-        return tokenService.gerarToken(usuario);
+    public ResponseEntity<Object> login(@RequestBody @Valid AuthenticationDTO authenticationDTO) {
+        return authorizationService.login(authenticationDTO);
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<Object> register(@RequestBody RegisterDTO registerDTO) {
+       return authorizationService.register(registerDTO);
+    }
 }

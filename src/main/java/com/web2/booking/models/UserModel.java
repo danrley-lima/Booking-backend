@@ -16,7 +16,15 @@ import java.util.UUID;
 @Entity
 @Table(name = "users")
 @Data
-public class UsersModel implements UserDetails {
+public class UserModel implements UserDetails {
+
+    public UserModel() {}
+
+    public UserModel(String email, String encryptedPassword, Role role) {
+        this.email = email;
+        this.password = encryptedPassword;
+        this.role = role;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -40,7 +48,7 @@ public class UsersModel implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of(new SimpleGrantedAuthority("CUSTOMER"));
     }
 
     @Override
