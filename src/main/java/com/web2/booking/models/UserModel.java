@@ -4,6 +4,7 @@ import com.web2.booking.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "users")
 @Data
+@AllArgsConstructor
 public class UserModel implements UserDetails {
 
     public UserModel() {}
@@ -51,11 +53,11 @@ public class UserModel implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if(this.role == Role.ADMIN) {
-            return List.of(new SimpleGrantedAuthority("ADMINISTRATOR"));
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_CUSTOMER"), new SimpleGrantedAuthority("ROLE_ESTABLISHMENT"));
         } else if(this.role == Role.CUSTOMER) {
-            return List.of(new SimpleGrantedAuthority("CUSTOMER"));
+            return List.of(new SimpleGrantedAuthority("ROLE_CUSTOMER"));
         } else {
-            return List.of(new SimpleGrantedAuthority("ESTABLISHMENT"));
+            return List.of(new SimpleGrantedAuthority("ROLE_ESTABLISHMENT"));
         }
     }
 
