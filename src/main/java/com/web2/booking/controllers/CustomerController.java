@@ -41,7 +41,7 @@ public class CustomerController {
     return ResponseEntity.ok(response);
   }
 
-  @PostMapping("/")
+  @PostMapping
   public ResponseEntity<CreateCustomerOutputDTO> createCustomer(@RequestBody CreateCustomerInputDTO customer) {
     CreateCustomerOutputDTO response = customerService.saveCustomer(customer);
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
