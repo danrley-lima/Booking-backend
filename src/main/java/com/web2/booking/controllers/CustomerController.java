@@ -1,10 +1,12 @@
 package com.web2.booking.controllers;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +28,12 @@ import com.web2.booking.services.CustomerService;
 public class CustomerController {
   @Autowired
   CustomerService customerService;
+
+  @GetMapping
+  public ResponseEntity<List<CustomerOutputDTO>> getCustomers(){
+    List<CustomerOutputDTO> response = customerService.getCustomers();
+    return ResponseEntity.ok(response);
+  }
 
   @GetMapping("/{id}")
   public ResponseEntity<CustomerOutputDTO> getCustomerById(@PathVariable UUID id) {
