@@ -33,7 +33,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, PATTERN_API_CUSTOMERS).hasRole("CUSTOMER")
+                        .requestMatchers(HttpMethod.POST, PATTERN_API_CUSTOMERS).permitAll()
+                        .requestMatchers(HttpMethod.GET, PATTERN_API_CUSTOMERS).permitAll()
                         .requestMatchers(HttpMethod.GET, PATTERN_API_CUSTOMERS + "/{id}").hasRole("CUSTOMER")
                         .requestMatchers(HttpMethod.PUT, PATTERN_API_CUSTOMERS + "/{id}").hasRole("CUSTOMER")
                         .requestMatchers(HttpMethod.DELETE, PATTERN_API_CUSTOMERS + "/{id}").hasRole("CUSTOMER")
