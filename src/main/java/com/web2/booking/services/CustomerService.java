@@ -1,9 +1,11 @@
 package com.web2.booking.services;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
@@ -30,6 +32,15 @@ public class CustomerService {
 
   @Autowired
   private Validator validator;
+
+  public List<CustomerOutputDTO> getCustomers(){
+    List<CustomerModel> list = customerReposity.findAll();
+    List<CustomerOutputDTO> customers = new ArrayList<>();
+    for(CustomerModel customer: list){
+      customers.add(mapCustomerToCustomerOutputDTO(customer));
+    }
+    return customers;
+  }
 
   public CustomerOutputDTO getCustomer(UUID id) {
     CustomerModel customer = customerReposity.findById(id)
