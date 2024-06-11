@@ -32,23 +32,29 @@ public class ProductModel {
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
-  @NotBlank
-  private String title;
+  // @NotBlank
+  private String name;
 
-  @NotBlank
+  @Nullable
+  // @NotBlank
   private String description;
 
-  @NotBlank
+  @Nullable
+  // @NotBlank
   private String mainImage;
 
-  @NotBlank
+  @Nullable
+  // @NotBlank
   private String city;
 
-  @NotBlank
+  @Nullable
+  // @NotBlank
   private String state;
 
   @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+  @Nullable
   private List<PhotoModel> photos;
+
 
   @NotNull
   @Positive
@@ -60,30 +66,34 @@ public class ProductModel {
   @Nullable
   private int numberOfReviews;
 
+  @Nullable
   @Min(0)
   @Column(columnDefinition = "INT default 0")
   private int discount;
 
+  @Nullable
   @Positive
   private double totalPrice;
 
   @Column(name = "created_at")
   private LocalDateTime createdAt;
 
-  @JsonFormat(pattern = "MM/dd/yyyy")
+  @JsonFormat(pattern = "dd/MM/yyyy")
   private LocalDate startDate;
 
-  @JsonFormat(pattern = "MM/dd/yyyy")
+  @JsonFormat(pattern = "dd/MM/yyyy")
   private LocalDate endDate;
 
   @Nullable
   private String coupon;
 
   // Provável mudança para criar uma tabela intermediária
+  @Nullable
   @ManyToOne
   @JoinColumn(name = "customer_id")
   private CustomerModel customer;
 
+  @Nullable
   @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
   private List<RatingModel> ratings;
 }

@@ -38,7 +38,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, PATTERN_API_CUSTOMERS + "/{id}").hasRole("CUSTOMER")
                         .requestMatchers(HttpMethod.PUT, PATTERN_API_CUSTOMERS + "/{id}").hasRole("CUSTOMER")
                         .requestMatchers(HttpMethod.DELETE, PATTERN_API_CUSTOMERS + "/{id}").hasRole("CUSTOMER")
-                        .requestMatchers(HttpMethod.POST, PATTERN_API_PRODUCTS).hasRole("ESTABLISHMENT")
+                        .requestMatchers(HttpMethod.POST, PATTERN_API_PRODUCTS).permitAll()
                         .requestMatchers(HttpMethod.GET, PATTERN_API_PRODUCTS + "/{id}").hasRole("ESTABLISHMENT")
                         .requestMatchers(HttpMethod.PUT, PATTERN_API_PRODUCTS + "/{id}").hasRole("ESTABLISHMENT")
                         .requestMatchers(HttpMethod.DELETE, PATTERN_API_PRODUCTS + "/{id}").hasRole("ESTABLISHMENT")

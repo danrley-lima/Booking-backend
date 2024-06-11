@@ -22,14 +22,14 @@ public class ProductRepositoryTest {
   @BeforeEach
   public void setUp() {
     product = new ProductModel();
-    product.setTitle("Test Product");
+    product.setName("Test Product");
     product.setPrice(100.0);
     product.setCity("Test City");
     product.setDiscount(20);
     product.setMainImage("blablabla");
     product.setNumberOfReviews(12);
     product.setState("RN");
-    product.setTotalPrice(3200);
+    // product.setTotalPrice(3200);
     product.setCustomerScore(8.5);
     product.setCreatedAt(LocalDateTime.of(2024, 01, 20, 0, 0));
   }

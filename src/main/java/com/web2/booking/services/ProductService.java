@@ -39,7 +39,7 @@ public class ProductService {
     ProductModel savedProduct = productRepository.save(newProduct);
 
     CreateProductOutputDTO output = new CreateProductOutputDTO(savedProduct.getId(),
-        savedProduct.getTitle(), savedProduct.getDescription(), savedProduct.getMainImage(),
+        savedProduct.getName(), savedProduct.getDescription(), savedProduct.getMainImage(),
         savedProduct.getCity(), savedProduct.getState(), savedProduct.getPrice(),
         savedProduct.getCustomerScore(), savedProduct.getNumberOfReviews(),
         savedProduct.getDiscount(), savedProduct.getTotalPrice(), savedProduct.getCreatedAt(),
@@ -82,7 +82,7 @@ public class ProductService {
   // }
 
   private ProductOutputDTO mapProductToProductOutputDTO(ProductModel product) {
-    return new ProductOutputDTO(product.getId(), product.getTitle(), product.getDescription(),
+    return new ProductOutputDTO(product.getId(), product.getName(), product.getDescription(),
         product.getMainImage(), product.getCity(), product.getState(), product.getPrice(),
         product.getCustomerScore(), product.getNumberOfReviews(), product.getDiscount(),
         product.getTotalPrice(), product.getCreatedAt(), product.getStartDate(), product.getEndDate());
