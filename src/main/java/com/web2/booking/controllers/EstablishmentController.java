@@ -1,5 +1,6 @@
 package com.web2.booking.controllers;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,12 @@ import com.web2.booking.services.EstablishmentService;
 public class EstablishmentController {
     @Autowired
     EstablishmentService establishmentService;
+
+    @GetMapping
+    public ResponseEntity<List<EstablishmentOutputDTO>> getAllEstablishments(){
+        List<EstablishmentOutputDTO> response = establishmentService.getAllEstablishments();
+        return ResponseEntity.ok(response);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<EstablishmentOutputDTO> getEstablishmentById(@PathVariable UUID id) {

@@ -1,6 +1,8 @@
 package com.web2.booking.services;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -30,6 +32,15 @@ public class EstablishmentService {
 
     @Autowired
     private Validator validator;
+
+    public List<EstablishmentOutputDTO> getAllEstablishments(){
+        List<EstablishmentModel> establishments = establishmentRepository.findAll();
+        List<EstablishmentOutputDTO> establishmentsDTO = new ArrayList<EstablishmentOutputDTO>();
+        establishments.forEach(establishment -> {
+            establishmentsDTO.add(mapEstablishmentToEstablishmentDTO(establishment));
+        });
+        return establishmentsDTO;
+    }
     
     public EstablishmentOutputDTO getEstablishment(UUID id){
         EstablishmentModel establishment = establishmentRepository.findById(id)
