@@ -70,16 +70,15 @@ public class ProductService {
     return new DeleteProductOutputDTO(true);
   }
 
-  // Refatorar
-  // public ProductOutputDTO updateProduct(UUID id, UpdateProductInputDTO product) {
-  //   ProductModel productToUpdate =
-  //       productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+  public ProductOutputDTO updateProduct(UUID id, UpdateProductInputDTO product) {
+    ProductModel productToUpdate =
+        productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
 
-  //   BeanUtils.copyProperties(product, productToUpdate, getNullPropertyNames(product));
-  //   validateProduct(productToUpdate);
-  //   ProductModel updatedProduct = productRepository.save(productToUpdate);
-  //   return mapProductToProductOutputDTO(updatedProduct);
-  // }
+    BeanUtils.copyProperties(product, productToUpdate, getNullPropertyNames(product));
+    validateProduct(productToUpdate);
+    ProductModel updatedProduct = productRepository.save(productToUpdate);
+    return mapProductToProductOutputDTO(updatedProduct);
+  }
 
   private ProductOutputDTO mapProductToProductOutputDTO(ProductModel product) {
     return new ProductOutputDTO(product.getId(), product.getName(), product.getDescription(),
