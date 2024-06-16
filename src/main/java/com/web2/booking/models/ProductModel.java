@@ -57,7 +57,7 @@ public class ProductModel {
 
 
   @NotNull
-  @Positive
+  @Min(0)
   private double price;
 
   @Nullable
@@ -72,7 +72,7 @@ public class ProductModel {
   private int discount;
 
   @Nullable
-  @Positive
+  @Min(0)
   private double totalPrice;
 
   @Column(name = "created_at")
