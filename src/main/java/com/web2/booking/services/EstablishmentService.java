@@ -58,7 +58,7 @@ public class EstablishmentService {
 
         return new CreateEstablishmentOutputDTO(
             savedEstablishment.getId(),
-            savedEstablishment.getUserProfileModel(),
+            savedEstablishment.getUserModel(),
             savedEstablishment.getAddressModel(),
             savedEstablishment.getDescription(),
             savedEstablishment.getCnpj(),
@@ -107,7 +107,7 @@ public class EstablishmentService {
     private EstablishmentOutputDTO mapEstablishmentToEstablishmentDTO(EstablishmentModel establishment) {
     return new EstablishmentOutputDTO(
         establishment.getId(),
-        establishment.getUserProfileModel(),
+        establishment.getUserModel(),
         establishment.getAddressModel(),
         establishment.getDescription(),
         establishment.getCnpj(),

@@ -2,8 +2,8 @@ package com.web2.booking.DTO.Establishment;
 
 
 import com.web2.booking.models.AddressModel;
-import com.web2.booking.models.UserProfileModel;
+import com.web2.booking.models.UserModel;
 
-public record CreateEstablishmentInputDTO(UserProfileModel userProfileModel, AddressModel addressModel, String description, String cnpj) {
+public record CreateEstablishmentInputDTO(UserModel UserModel, AddressModel addressModel, String description, String cnpj) {
     
 }

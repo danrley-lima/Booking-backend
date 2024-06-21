@@ -5,8 +5,8 @@ import java.util.UUID;
 
 import com.web2.booking.models.AddressModel;
 import com.web2.booking.models.ProductModel;
-import com.web2.booking.models.UserProfileModel;
+import com.web2.booking.models.UserModel;
 
-public record CreateEstablishmentOutputDTO(UUID id, UserProfileModel userProfileModel, AddressModel addressModel, String description, String cnpj, List<ProductModel> products) {
+public record CreateEstablishmentOutputDTO(UUID id, UserModel UserModel, AddressModel addressModel, String description, String cnpj, List<ProductModel> products) {
     
 }
