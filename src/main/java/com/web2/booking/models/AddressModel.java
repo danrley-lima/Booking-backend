@@ -24,8 +24,8 @@ public class AddressModel {
     private String state;
 
     @NotBlank
-    @Size(min = 8, max = 8)
-    @Pattern(regexp = "\\d{5}-\\d{3}", message = "The zip code must be in the format 12345-678")
+    //@Size(min = 8, max = 8)
+    //@Pattern(regexp = "\\d{5}-\\d{3}", message = "The zip code must be in the format 12345-678")
     private String zipCode;
 
     @NotBlank

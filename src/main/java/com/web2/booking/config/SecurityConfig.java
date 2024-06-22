@@ -24,6 +24,7 @@ public class SecurityConfig {
 
     static final String PATTERN_API_CUSTOMERS = "/api/customers";
     static final String PATTERN_API_PRODUCTS = "/api/products";
+    static final String PATTERN_API_ESTABLISHMENTS = "/api/establishment/";
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -43,6 +44,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, PATTERN_API_PRODUCTS + "/{id}").authenticated()
                         .requestMatchers(HttpMethod.PUT, PATTERN_API_PRODUCTS + "/{id}").authenticated()
                         .requestMatchers(HttpMethod.DELETE, PATTERN_API_PRODUCTS + "/{id}").authenticated()
+                        .requestMatchers(HttpMethod.POST, PATTERN_API_ESTABLISHMENTS).permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
