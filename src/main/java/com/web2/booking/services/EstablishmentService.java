@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import com.web2.booking.models.AddressModel;
+import com.web2.booking.repositories.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
@@ -31,7 +33,13 @@ public class EstablishmentService {
     private EstablishmentRepository establishmentRepository;
 
     @Autowired
+    private AddressService addressService;
+
+    @Autowired
     private Validator validator;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public List<EstablishmentOutputDTO> getAllEstablishments(){
         List<EstablishmentModel> establishments = establishmentRepository.findAll();
@@ -50,6 +58,17 @@ public class EstablishmentService {
 
     public CreateEstablishmentOutputDTO saveEstablishment(CreateEstablishmentInputDTO input){
         EstablishmentModel newEstablishment = new EstablishmentModel();
+
+        if(input.addressModel().getId() == null) {
+            AddressModel addressModel = addressService.mapToModel(input.addressModel());
+            addressModel = addressService.save(addressModel);
+            newEstablishment.setAddressModel(addressModel);
+        }
+
+        if(input.userModel().getId() == null) {
+            userRepository.save(input.userModel());
+        }
+
         BeanUtils.copyProperties(input, newEstablishment);
 
         validateEstablishment(newEstablishment);
