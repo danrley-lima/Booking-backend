@@ -40,6 +40,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, PATTERN_API_CUSTOMERS + "/{id}").authenticated()
                         .requestMatchers(HttpMethod.PUT, PATTERN_API_CUSTOMERS + "/{id}").authenticated()
                         .requestMatchers(HttpMethod.DELETE, PATTERN_API_CUSTOMERS + "/{id}").authenticated()
+                        .requestMatchers(HttpMethod.GET, PATTERN_API_PRODUCTS).permitAll()
                         .requestMatchers(HttpMethod.POST, PATTERN_API_PRODUCTS).permitAll()
                         .requestMatchers(HttpMethod.GET, PATTERN_API_PRODUCTS + "/{id}").authenticated()
                         .requestMatchers(HttpMethod.PUT, PATTERN_API_PRODUCTS + "/{id}").authenticated()
