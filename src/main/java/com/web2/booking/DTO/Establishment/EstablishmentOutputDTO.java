@@ -7,6 +7,6 @@ import com.web2.booking.models.AddressModel;
 import com.web2.booking.models.ProductModel;
 import com.web2.booking.models.UserModel;
 
-public record EstablishmentOutputDTO(UUID id, UserModel userProfileModel, AddressModel addressModel, String description, String cnpj, List<ProductModel> products) {
+public record EstablishmentOutputDTO(UUID id, UserModel UserModel, AddressModel addressModel, String description, String cnpj, List<ProductModel> products) {
     
 }
