@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.web2.booking.models.AddressModel;
+import com.web2.booking.models.UserModel;
 import com.web2.booking.repositories.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
@@ -65,10 +66,12 @@ public class EstablishmentService {
             newEstablishment.setAddressModel(addressModel);
         }
 
+        UserModel user = new UserModel();
         if(input.userModel().getId() == null) {
-            userRepository.save(input.userModel());
+            user = userRepository.save(input.userModel());
         }
 
+        newEstablishment.setUserModel(user);
         BeanUtils.copyProperties(input, newEstablishment);
 
         validateEstablishment(newEstablishment);
