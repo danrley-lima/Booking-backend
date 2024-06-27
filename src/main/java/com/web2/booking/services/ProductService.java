@@ -29,6 +29,60 @@ public class ProductService {
   @Autowired
   private Validator validator;
 
+  // public List<ProductOutputDTO> searchProducts(String category, String
+  // saindoDe, String indoPara, String data,
+  // Integer pessoas) {
+  // Category enumCategory = category != null ?
+  // Category.valueOf(category.toUpperCase()) : null;
+  // LocalDate date = data != null ? LocalDate.parse(data) : null;
+
+  // List<ProductModel> products = productRepository.searchProducts(enumCategory,
+  // saindoDe, indoPara, date, pessoas);
+  // List<ProductOutputDTO> productDTOs = new ArrayList<>();
+
+  // for (ProductModel product : products) {
+  // ProductOutputDTO productDTO = new ProductOutputDTO();
+  // // Mapear os campos do model para o DTO
+  // productDTO.setId(product.getId());
+  // productDTO.setTitle(product.getName());
+  // // Adicione os demais campos necessários
+  // productDTOs.add(productDTO);
+  // }
+
+  // return productDTOs;
+  // }
+
+  public List<ProductModel> searchProductsByDate(LocalDate data) {
+    return null;
+
+    // List<ProductModel> products = productRepository.findByDateBetweenStartDateAndEndDate(data);
+    // List<ProductModel> productsModels = new ArrayList<>();
+
+    // for (ProductModel product : products) {
+    //   ProductModel productDTO = new ProductModel();
+    //   productDTO.setId(product.getId());
+    //   productDTO.setName(product.getName());
+    //   productDTO.setCity(product.getCity());
+    //   productDTO.setState(product.getState());
+    //   productDTO.setPrice(product.getPrice());
+    //   productDTO.setCustomerScore(product.getCustomerScore());
+    //   productDTO.setNumberOfReviews(product.getNumberOfReviews());
+    //   productDTO.setDiscount(product.getDiscount());
+    //   productDTO.setTotalPrice(product.getTotalPrice());
+    //   productDTO.setCoupon(product.getCoupon());
+    //   productDTO.setStartDate(product.getStartDate());
+    //   productDTO.setEndDate(product.getEndDate());
+    //   productDTO.setCreatedAt(product.getCreatedAt());
+    //   productDTO.setMainImage(product.getMainImage());
+    //   productDTO.setPhotos(product.getPhotos());
+    //   productDTO.setCategory(product.getCategory());
+
+    //   productsModels.add(productDTO);
+    // }
+
+    // return productsModels;
+  }
+
   public CreateProductOutputDTO saveProduct(CreateProductInputDTO product) {
     ProductModel newProduct = new ProductModel();
     BeanUtils.copyProperties(product, newProduct);
@@ -39,18 +93,17 @@ public class ProductService {
     ProductModel savedProduct = productRepository.save(newProduct);
 
     CreateProductOutputDTO output = new CreateProductOutputDTO(savedProduct.getId(),
-        savedProduct.getName(), savedProduct.getDescription(), savedProduct.getMainImage(),
+        savedProduct.getTitle(), savedProduct.getDescription(), savedProduct.getMainImage(),
         savedProduct.getCity(), savedProduct.getState(), savedProduct.getPrice(),
         savedProduct.getCustomerScore(), savedProduct.getNumberOfReviews(),
         savedProduct.getDiscount(), savedProduct.getTotalPrice(), savedProduct.getCreatedAt(),
-        savedProduct.getStartDate(), savedProduct.getEndDate());
+        savedProduct.getStartDate(), savedProduct.getEndDate(), savedProduct.getCategory().toString());
 
     return output;
   }
 
   public ProductOutputDTO getProduct(UUID id) {
-    ProductModel product =
-        productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+    ProductModel product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
 
     return mapProductToProductOutputDTO(product);
   }
@@ -71,8 +124,8 @@ public class ProductService {
   }
 
   public ProductOutputDTO updateProduct(UUID id, UpdateProductInputDTO product) {
-    ProductModel productToUpdate =
-        productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+    ProductModel productToUpdate = productRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Product not found"));
 
     BeanUtils.copyProperties(product, productToUpdate, getNullPropertyNames(product));
     validateProduct(productToUpdate);
@@ -81,10 +134,10 @@ public class ProductService {
   }
 
   private ProductOutputDTO mapProductToProductOutputDTO(ProductModel product) {
-    return new ProductOutputDTO(product.getId(), product.getName(), product.getDescription(),
+    return new ProductOutputDTO(product.getId(), product.getTitle(), product.getDescription(),
         product.getMainImage(), product.getCity(), product.getState(), product.getPrice(),
         product.getCustomerScore(), product.getNumberOfReviews(), product.getDiscount(),
-        product.getTotalPrice(), product.getCreatedAt(), product.getStartDate(), product.getEndDate());
+        product.getTotalPrice(), product.getCreatedAt(), product.getStartDate(), product.getEndDate(), product.getCategory());
   }
 
   private String[] getNullPropertyNames(Object source) {
