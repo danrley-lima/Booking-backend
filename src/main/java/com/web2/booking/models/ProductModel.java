@@ -32,29 +32,23 @@ public class ProductModel {
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
-  // @NotBlank
   private String name;
 
   @Nullable
-  // @NotBlank
   private String description;
 
   @Nullable
-  // @NotBlank
   private String mainImage;
 
   @Nullable
-  // @NotBlank
   private String city;
 
   @Nullable
-  // @NotBlank
   private String state;
 
   @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
   @Nullable
   private List<PhotoModel> photos;
-
 
   @NotNull
   @Min(0)
@@ -71,10 +65,6 @@ public class ProductModel {
   @Column(columnDefinition = "INT default 0")
   private int discount;
 
-  @Nullable
-  @Min(0)
-  private double totalPrice;
-
   @Column(name = "created_at")
   private LocalDateTime createdAt;
 
@@ -86,12 +76,6 @@ public class ProductModel {
 
   @Nullable
   private String coupon;
-
-  // Provável mudança para criar uma tabela intermediária
-  @Nullable
-  @ManyToOne
-  @JoinColumn(name = "customer_id")
-  private CustomerModel customer;
 
   @Nullable
   @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
