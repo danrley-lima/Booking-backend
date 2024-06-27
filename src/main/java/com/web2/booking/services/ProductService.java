@@ -42,7 +42,7 @@ public class ProductService {
         savedProduct.getName(), savedProduct.getDescription(), savedProduct.getMainImage(),
         savedProduct.getCity(), savedProduct.getState(), savedProduct.getPrice(),
         savedProduct.getCustomerScore(), savedProduct.getNumberOfReviews(),
-        savedProduct.getDiscount(), savedProduct.getCreatedAt(),
+        savedProduct.getDiscount(), savedProduct.getQuantity(), savedProduct.getCreatedAt(),
         savedProduct.getStartDate(), savedProduct.getEndDate());
 
     return output;
@@ -83,7 +83,7 @@ public class ProductService {
   private ProductOutputDTO mapProductToProductOutputDTO(ProductModel product) {
     return new ProductOutputDTO(product.getId(), product.getName(), product.getDescription(),
         product.getMainImage(), product.getCity(), product.getState(), product.getPrice(),
-        product.getCustomerScore(), product.getNumberOfReviews(), product.getDiscount(), product.getCreatedAt(), product.getStartDate(), product.getEndDate());
+        product.getCustomerScore(), product.getNumberOfReviews(), product.getDiscount(), product.getQuantity(), product.getCreatedAt(), product.getStartDate(), product.getEndDate());
   }
 
   private String[] getNullPropertyNames(Object source) {

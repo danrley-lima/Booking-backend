@@ -65,6 +65,10 @@ public class ProductModel {
   @Column(columnDefinition = "INT default 0")
   private int discount;
 
+  @Nullable
+  @Min(0)
+  private int quantity;
+
   @Column(name = "created_at")
   private LocalDateTime createdAt;
 
