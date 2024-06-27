@@ -22,7 +22,7 @@ public class ProductRepositoryTest {
   @BeforeEach
   public void setUp() {
     product = new ProductModel();
-    product.setName("Test Product");
+    product.setTitle("Test Product");
     product.setPrice(100.0);
     product.setCity("Test City");
     product.setDiscount(20);
