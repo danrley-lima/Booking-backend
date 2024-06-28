@@ -93,7 +93,8 @@ public class ProductService {
     // return productsModels;
   }
 
-  public CreateProductOutputDTO saveProduct(CreateProductInputDTO product) {
+  @Transactional
+  public CreateProductOutputDTO saveProduct(CreateProductInputDTO product, String idUser) {
     ProductModel newProduct = new ProductModel();
     BeanUtils.copyProperties(product, newProduct);
     newProduct.setCreatedAt(LocalDateTime.now());
