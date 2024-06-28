@@ -13,6 +13,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.web2.booking.DTO.Establishment.CreateEstablishmentInputDTO;
@@ -68,6 +69,8 @@ public class EstablishmentService {
 
         UserModel user = new UserModel();
         if(input.userModel().getId() == null) {
+            String encryptedPassword = new BCryptPasswordEncoder().encode(input.userModel().getPassword());
+            input.userModel().setPassword(encryptedPassword);
             user = userRepository.save(input.userModel());
         }
 
@@ -103,6 +106,10 @@ public class EstablishmentService {
         establishmentRepository.findById(id).orElseThrow(() -> new RuntimeException("Establishment not found"));
         establishmentRepository.deleteById(id);
         return new DeleteEstablishmentOutputDTO(true);
+    }
+
+    public EstablishmentModel findByUserModelId(String idUser) {
+        return establishmentRepository.findByUserModelId(UUID.fromString(idUser));
     }
 
     private String[] getNullPropertyNames(Object source) {

@@ -4,6 +4,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
+import com.web2.booking.models.EstablishmentModel;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
@@ -23,13 +27,20 @@ import jakarta.validation.Validator;
 @Service
 public class ProductService {
 
+  @PersistenceContext
+  private EntityManager entityManager;
+
   @Autowired
   private ProductRepository productRepository;
 
   @Autowired
+  private EstablishmentService establishmentService;
+
+  @Autowired
   private Validator validator;
 
-  public CreateProductOutputDTO saveProduct(CreateProductInputDTO product) {
+  @Transactional
+  public CreateProductOutputDTO saveProduct(CreateProductInputDTO product, String idUser) {
     ProductModel newProduct = new ProductModel();
     BeanUtils.copyProperties(product, newProduct);
     newProduct.setCreatedAt(LocalDateTime.now());
@@ -37,6 +48,10 @@ public class ProductService {
     validateProduct(newProduct);
 
     ProductModel savedProduct = productRepository.save(newProduct);
+
+    EstablishmentModel e = establishmentService.findByUserModelId(idUser);
+    e.getProducts().add(savedProduct);
+    entityManager.merge(e);
 
     CreateProductOutputDTO output = new CreateProductOutputDTO(savedProduct.getId(),
         savedProduct.getName(), savedProduct.getDescription(), savedProduct.getMainImage(),

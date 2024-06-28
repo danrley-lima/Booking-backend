@@ -41,9 +41,9 @@ public class ProductController {
     return ResponseEntity.ok(response);
   }
 
-  @PostMapping
-  ResponseEntity<CreateProductOutputDTO> createProduct(@RequestBody CreateProductInputDTO product) {
-    CreateProductOutputDTO response = productService.saveProduct(product);
+  @PostMapping("/{idUser}")
+  ResponseEntity<CreateProductOutputDTO> createProduct(@RequestBody CreateProductInputDTO product, @PathVariable String idUser) {
+    CreateProductOutputDTO response = productService.saveProduct(product, idUser);
     return ResponseEntity.ok(response);
   }
 
