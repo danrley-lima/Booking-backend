@@ -24,7 +24,7 @@ public class DatabaseSeeder implements CommandLineRunner {
 
   private void seedDatabase() {
     // Limpa o banco de dados para evitar duplicação durante o desenvolvimento
-    productRepository.deleteAll();
+   /* productRepository.deleteAll();
 
     ProductModel product1 = new ProductModel();
     product1.setTitle("Product 1");
@@ -97,6 +97,6 @@ public class DatabaseSeeder implements CommandLineRunner {
     // Salva os produtos no banco de dados
     productRepository.saveAll(Arrays.asList(product1, product2, product3, product4));
 
-    System.out.println("Database seeded successfully.");
+    System.out.println("Database seeded successfully.");*/
   }
 }

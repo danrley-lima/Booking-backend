@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.web2.booking.models.AddressModel;
+import com.web2.booking.models.ProductModel;
 import com.web2.booking.models.UserModel;
 import com.web2.booking.repositories.UserRepository;
 import org.springframework.beans.BeanUtils;
@@ -110,6 +111,11 @@ public class EstablishmentService {
 
     public EstablishmentModel findByUserModelId(String idUser) {
         return establishmentRepository.findByUserModelId(UUID.fromString(idUser));
+    }
+
+    public List<ProductModel> productsByEstablishmentId(String id) {
+        EstablishmentModel e = establishmentRepository.findByUserModelId(UUID.fromString(id));
+        return establishmentRepository.findProductsByEstablishmentId(e.getId());
     }
 
     private String[] getNullPropertyNames(Object source) {
