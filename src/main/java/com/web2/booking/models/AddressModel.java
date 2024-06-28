@@ -1,12 +1,14 @@
 package com.web2.booking.models;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
-import lombok.Data;
-
 import java.util.UUID;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 
 @Entity
 @Table(name = "address")
@@ -24,8 +26,9 @@ public class AddressModel {
     private String state;
 
     @NotBlank
-    //@Size(min = 8, max = 8)
-    //@Pattern(regexp = "\\d{5}-\\d{3}", message = "The zip code must be in the format 12345-678")
+    // @Size(min = 8, max = 8)
+    // @Pattern(regexp = "\\d{5}-\\d{3}", message = "The zip code must be in the
+    // format 12345-678")
     private String zipCode;
 
     @NotBlank
