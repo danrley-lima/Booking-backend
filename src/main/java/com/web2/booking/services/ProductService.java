@@ -2,7 +2,11 @@ package com.web2.booking.services;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 import com.web2.booking.models.EstablishmentModel;
 import jakarta.persistence.EntityManager;
@@ -13,13 +17,16 @@ import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.web2.booking.DTO.Product.CreateProductInputDTO;
 import com.web2.booking.DTO.Product.CreateProductOutputDTO;
 import com.web2.booking.DTO.Product.DeleteProductOutputDTO;
 import com.web2.booking.DTO.Product.ProductOutputDTO;
 import com.web2.booking.DTO.Product.UpdateProductInputDTO;
+import com.web2.booking.enums.Category;
 import com.web2.booking.models.ProductModel;
 import com.web2.booking.repositories.ProductRepository;
+
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
@@ -39,58 +46,20 @@ public class ProductService {
   @Autowired
   private Validator validator;
 
-  // public List<ProductOutputDTO> searchProducts(String category, String
-  // saindoDe, String indoPara, String data,
-  // Integer pessoas) {
-  // Category enumCategory = category != null ?
-  // Category.valueOf(category.toUpperCase()) : null;
-  // LocalDate date = data != null ? LocalDate.parse(data) : null;
+  public List<ProductModel> searchProductsByDate(LocalDate date, String category, String saindoDe, String indoPara,
+      Integer pessoas) {
 
-  // List<ProductModel> products = productRepository.searchProducts(enumCategory,
-  // saindoDe, indoPara, date, pessoas);
-  // List<ProductOutputDTO> productDTOs = new ArrayList<>();
+    List<ProductModel> products = productRepository.findProductsByDate(date);
 
-  // for (ProductModel product : products) {
-  // ProductOutputDTO productDTO = new ProductOutputDTO();
-  // // Mapear os campos do model para o DTO
-  // productDTO.setId(product.getId());
-  // productDTO.setTitle(product.getName());
-  // // Adicione os demais campos necessários
-  // productDTOs.add(productDTO);
-  // }
+    if (category != null) {
+      Category categoryEnum = Category.valueOf(category.toUpperCase());
+      products = productRepository.findProductsByDateAndCategory(date, categoryEnum);
+      // products = productRepository.findProductsByDateAndCategory(date, category);
+    } else {
+      products = productRepository.findProductsByDate(date);
+    }
 
-  // return productDTOs;
-  // }
-
-  public List<ProductModel> searchProductsByDate(LocalDate data) {
-    return null;
-
-    // List<ProductModel> products =
-    // productRepository.findByDateBetweenStartDateAndEndDate(data);
-    // List<ProductModel> productsModels = new ArrayList<>();
-
-    // for (ProductModel product : products) {
-    // ProductModel productDTO = new ProductModel();
-    // productDTO.setId(product.getId());
-    // productDTO.setName(product.getName());
-    // productDTO.setCity(product.getCity());
-    // productDTO.setState(product.getState());
-    // productDTO.setPrice(product.getPrice());
-    // productDTO.setCustomerScore(product.getCustomerScore());
-    // productDTO.setNumberOfReviews(product.getNumberOfReviews());
-    // productDTO.setDiscount(product.getDiscount());
-    // productDTO.setCoupon(product.getCoupon());
-    // productDTO.setStartDate(product.getStartDate());
-    // productDTO.setEndDate(product.getEndDate());
-    // productDTO.setCreatedAt(product.getCreatedAt());
-    // productDTO.setMainImage(product.getMainImage());
-    // productDTO.setPhotos(product.getPhotos());
-    // productDTO.setCategory(product.getCategory());
-
-    // productsModels.add(productDTO);
-    // }
-
-    // return productsModels;
+    return products;
   }
 
   @Transactional
