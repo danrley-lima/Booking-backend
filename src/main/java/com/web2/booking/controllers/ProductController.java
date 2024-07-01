@@ -31,14 +31,18 @@ public class ProductController {
   ProductService productService;
 
   @GetMapping("/by-date")
-  ResponseEntity<List<ProductModel>> getAllProducts(
+  public ResponseEntity<List<ProductModel>> getAllProductsByDate(
       @RequestParam(required = false) String category,
       @RequestParam(required = false) String saindoDe,
       @RequestParam(required = false) String indoPara,
-      @RequestParam(required = false) String data,
+      @RequestParam(required = false) String date,
       @RequestParam(required = false) Integer pessoas) {
-    LocalDate dataConvertida = data != null ? LocalDate.parse(data) : null;
-    List<ProductModel> response = productService.searchProductsByDate(dataConvertida);
+
+    LocalDate dataConvertida = date != null ? LocalDate.parse(date) : null;
+
+    List<ProductModel> response = productService.searchProductsByDate(dataConvertida, category, saindoDe, indoPara,
+        pessoas);
+
     return ResponseEntity.ok(response);
   }
 

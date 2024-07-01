@@ -34,26 +34,26 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                         .requestMatchers(HttpMethod.POST, PATTERN_API_CUSTOMERS).permitAll()
                         .requestMatchers(HttpMethod.GET, PATTERN_API_CUSTOMERS).permitAll()
                         .requestMatchers(HttpMethod.GET, PATTERN_API_CUSTOMERS + "/{id}").authenticated()
                         .requestMatchers(HttpMethod.PUT, PATTERN_API_CUSTOMERS + "/{id}").authenticated()
                         .requestMatchers(HttpMethod.DELETE, PATTERN_API_CUSTOMERS + "/{id}").authenticated()
-                        .requestMatchers(HttpMethod.GET, PATTERN_API_PRODUCTS).permitAll()
                         .requestMatchers(HttpMethod.POST, PATTERN_API_PRODUCTS).permitAll()
-                        .requestMatchers(HttpMethod.GET, PATTERN_API_PRODUCTS + "/{id}").authenticated()
+                        .requestMatchers(HttpMethod.GET, PATTERN_API_PRODUCTS).permitAll()
+                        .requestMatchers(HttpMethod.GET, PATTERN_API_PRODUCTS + "/by-date").permitAll()
+                        .requestMatchers(HttpMethod.GET, PATTERN_API_PRODUCTS + "/{id}").permitAll()
                         .requestMatchers(HttpMethod.PUT, PATTERN_API_PRODUCTS + "/{id}").authenticated()
                         .requestMatchers(HttpMethod.DELETE, PATTERN_API_PRODUCTS + "/{id}").authenticated()
                         .requestMatchers(HttpMethod.POST, PATTERN_API_ESTABLISHMENTS).permitAll()
-                        .anyRequest().authenticated()
-                )
+                        .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+            throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 

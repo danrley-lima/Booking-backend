@@ -48,7 +48,7 @@ public class ProductModel {
   @Nullable
   private String state;
 
-  @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
   @Nullable
   private List<PhotoModel> photos;
 
@@ -84,7 +84,7 @@ public class ProductModel {
   private String coupon;
 
   @Nullable
-  @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+  @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
   private List<RatingModel> ratings;
 
   @Enumerated(EnumType.STRING)
