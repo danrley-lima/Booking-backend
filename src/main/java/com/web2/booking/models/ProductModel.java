@@ -28,65 +28,66 @@ import lombok.Data;
 @Table(name = "product")
 @Data
 public class ProductModel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
-  private UUID id;
+    private String title;
 
-  // @NotBlank
-  private String title;
+    @Nullable
+    private String description;
 
-  @Nullable
-  private String description;
+    @Nullable
+    private String mainImage;
 
-  @Nullable
-  private String mainImage;
+    @Nullable
+    private String city;
 
-  @Nullable
-  private String city;
+    @Nullable
+    private String state;
 
-  @Nullable
-  private String state;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @Nullable
+    private List<PhotoModel> photos;
 
-  @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
-  @Nullable
-  private List<PhotoModel> photos;
+    @NotNull
+    @Min(0)
+    private double price;
 
-  @NotNull
-  @Min(0)
-  private double price;
+    @Nullable
+    private double customerScore;
 
-  @Nullable
-  private double customerScore;
+    @Nullable
+    private int numberOfReviews;
 
-  @Nullable
-  private int numberOfReviews;
+    @Nullable
+    @Min(0)
+    @Column(columnDefinition = "INT default 0")
+    private int discount;
 
-  @Nullable
-  @Min(0)
-  @Column(columnDefinition = "INT default 0")
-  private int discount;
+    @Nullable
+    @Min(0)
+    private int quantity;
 
-  @Nullable
-  @Min(0)
-  private int quantity;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-  @Column(name = "created_at")
-  private LocalDateTime createdAt;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate startDate;
 
-  @JsonFormat(pattern = "dd/MM/yyyy")
-  private LocalDate startDate;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate endDate;
 
-  @JsonFormat(pattern = "dd/MM/yyyy")
-  private LocalDate endDate;
+    @Nullable
+    private String coupon;
 
-  @Nullable
-  private String coupon;
+    @Nullable
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    private List<RatingModel> ratings;
 
-  @Nullable
-  @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
-  private List<RatingModel> ratings;
+    @Enumerated(EnumType.STRING)
+    private Category category;
 
-  @Enumerated(EnumType.STRING)
-  private Category category;
+    @OneToMany(mappedBy = "product")
+    private List<BookingModel> bookings;
 }
