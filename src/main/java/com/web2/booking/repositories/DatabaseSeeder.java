@@ -9,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import com.web2.booking.enums.Category;
+import com.web2.booking.models.CustomerModel;
 import com.web2.booking.models.ProductModel;
 
 @Component
@@ -17,16 +18,21 @@ public class DatabaseSeeder implements CommandLineRunner {
   @Autowired
   private ProductRepository productRepository;
 
+  @Autowired
+  private CustomerRepository customerRepository;
+
   @Override
   public void run(String... args) throws Exception {
-    seedDatabase();
+    // seedDatabase();
   }
 
   private void seedDatabase() {
     // Limpa o banco de dados para evitar duplicação durante o desenvolvimento
     productRepository.deleteAll();
+    customerRepository.deleteAll();
 
     ProductModel product1 = new ProductModel();
+    // product1.setId(UUID.fromString("6fd8efb7-2af3-4d06-ad6c-9acb6e034b41"));
     product1.setTitle("Product 1");
     product1.setDescription("Description for Product 1");
     product1.setMainImage("image1.jpg");
@@ -44,6 +50,7 @@ public class DatabaseSeeder implements CommandLineRunner {
     product1.setQuantity(4);
 
     ProductModel product2 = new ProductModel();
+    // product2.setId(UUID.fromString("bbd79a64-b3f7-4924-afb1-77b40f5bb9bd"));
     product2.setTitle("Product 2");
     product2.setDescription("Description for Product 2");
     product2.setMainImage("image2.jpg");
@@ -61,6 +68,7 @@ public class DatabaseSeeder implements CommandLineRunner {
     product2.setQuantity(4);
 
     ProductModel product3 = new ProductModel();
+    // product3.setId(UUID.fromString("b8f17a8d-e6b0-4250-987b-284952732714"));
     product3.setTitle("Product 3");
     product3.setDescription("Description for Product 3");
     product3.setMainImage("image3.jpg");
@@ -78,6 +86,7 @@ public class DatabaseSeeder implements CommandLineRunner {
     product3.setQuantity(4);
 
     ProductModel product4 = new ProductModel();
+    // product4.setId(UUID.fromString("e751d444-f85c-43e6-b0ee-cae0e4a74542"));
     product4.setTitle("Product 4");
     product4.setDescription("Description for Product 4");
     product4.setMainImage("image4.jpg");
@@ -93,6 +102,14 @@ public class DatabaseSeeder implements CommandLineRunner {
     product4.setCoupon("DISCOUNT25");
     product4.setCategory(Category.ACCOMMODATION);
     product4.setQuantity(4);
+
+    CustomerModel customer = new CustomerModel();
+    customer.setFirstName("Jon");
+    customer.setLastName("Snow");
+    customer.setEmail("JonSnow@teste.com");
+    customer.setPassword("jonsnow123");
+
+    customerRepository.save(customer);
 
     // Salva os produtos no banco de dados
     productRepository.saveAll(Arrays.asList(product1, product2, product3, product4));

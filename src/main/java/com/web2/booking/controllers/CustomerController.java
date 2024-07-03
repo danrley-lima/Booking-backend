@@ -2,6 +2,7 @@ package com.web2.booking.controllers;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,11 +16,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.web2.booking.DTO.BookingDto;
 import com.web2.booking.DTO.Customer.CreateCustomerInputDTO;
 import com.web2.booking.DTO.Customer.CreateCustomerOutputDTO;
 import com.web2.booking.DTO.Customer.CustomerOutputDTO;
 import com.web2.booking.DTO.Customer.DeleteCustomerOutputDTO;
 import com.web2.booking.DTO.Customer.UpdateCustomerInputDTO;
+import com.web2.booking.models.BookingModel;
+import com.web2.booking.services.BookingService;
 import com.web2.booking.services.CustomerService;
 
 @RestController
@@ -27,6 +31,18 @@ import com.web2.booking.services.CustomerService;
 public class CustomerController {
   @Autowired
   CustomerService customerService;
+
+  @Autowired
+  BookingService bookingService;
+
+  @GetMapping("/{customerId}/bookings")
+  public ResponseEntity<List<BookingDto>> getBookingsByCustomerId(@PathVariable UUID customerId) {
+    List<BookingModel> bookings = bookingService.getBookingsByCustomerId(customerId);
+    List<BookingDto> bookingDTOs = bookings.stream()
+        .map(this::convertToDTO)
+        .collect(Collectors.toList());
+    return ResponseEntity.ok(bookingDTOs);
+  }
 
   @GetMapping
   public ResponseEntity<List<CustomerOutputDTO>> getCustomers() {
@@ -59,4 +75,12 @@ public class CustomerController {
     return ResponseEntity.ok(response);
   }
 
+  private BookingDto convertToDTO(BookingModel booking) {
+    BookingDto dto = new BookingDto();
+    dto.setId(booking.getId());
+    dto.setStartDate(booking.getStartDate());
+    dto.setEndDate(booking.getEndDate());
+    // Mapear outros campos conforme necessário
+    return dto;
+  }
 }

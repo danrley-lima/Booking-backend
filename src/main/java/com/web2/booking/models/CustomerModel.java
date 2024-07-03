@@ -5,7 +5,17 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -13,59 +23,57 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Entity
-@Table(name = "customer")
 @Data
+@Table(name = "customer")
 public class CustomerModel {
-  @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
-  private UUID id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
-  @OneToOne
-  private UserModel userModel;
+    @OneToOne
+    private UserModel userModel;
 
-  @NotBlank
-  @Size(max = 50)
-  private String firstName;
+    @NotBlank
+    @Size(max = 50)
+    private String firstName;
 
-  @NotBlank
-  @Size(max = 50)
-  private String lastName;
+    @NotBlank
+    @Size(max = 50)
+    private String lastName;
 
-  @NotBlank
-  @Email
-  @Column(unique = true)
-  private String email;
+    @NotBlank
+    @Email
+    @Column(unique = true)
+    private String email;
 
-  @Pattern(regexp = "^\\(\\d{2}\\)\\s\\d{4,5}-\\d{4}$", message = "Número de telefone inválido")
-  private String phoneNumber;
+    @Pattern(regexp = "^\\(\\d{2}\\)\\s\\d{4,5}-\\d{4}$", message = "Número de telefone inválido")
+    private String phoneNumber;
 
-  @NotBlank
-  // @Size(min = 6, max = 20)
-  private String password;
+    @NotBlank
+    private String password;
 
-  @Size(min = 11, max = 11)
-  @Pattern(regexp = "[0-9]{11}")
-  @Column(unique = true)
-  private String cpf;
+    @Size(min = 11, max = 11)
+    @Pattern(regexp = "[0-9]{11}")
+    @Column(unique = true)
+    private String cpf;
 
-  @Column(name = "date_of_birth")
-  private LocalDate dateOfBirth;
+    @Column(name = "date_of_birth")
+    private LocalDate dateOfBirth;
 
-  private String nationality;
+    private String nationality;
 
-  @Pattern(regexp = "^(masculino|feminino|outros)$", message = "Gênero inválido")
-  private String gender;
+    @Pattern(regexp = "^(masculino|feminino|outros)$", message = "Gênero inválido")
+    private String gender;
 
-  @Column(name = "created_at")
-  private LocalDateTime createdAt;
-  
-  @ManyToMany
-  private List<ProductModel> favorites;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-  @ManyToMany
-  private List<ProductModel> history;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<ProductModel> favorites;
 
-  // @OneToMany(mappedBy = "customer")
-  // private List<ProductModel> schedule; // Lista de agendamentos futuros
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<ProductModel> history;
 
+    @OneToMany(mappedBy = "customer")
+    private List<BookingModel> bookings;
 }
